@@ -101,7 +101,6 @@ class LoginViewModel @Inject constructor(
                     _state.update { it.copy(isLoading = false) }
                     _eventChannel.send(
                         LoginEventFromVm.Error(
-                            // Override http error to prevent some details about the real error.
                             result.error.asUiText()
                         )
                     )

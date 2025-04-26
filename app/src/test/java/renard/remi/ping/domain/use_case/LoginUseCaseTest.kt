@@ -20,7 +20,7 @@ import renard.remi.ping.domain.repository.AuthRepository
 class LoginUseCaseTest {
 
     @InjectMockKs
-    private var loginUseCase: LoginUseCase? = null
+    private lateinit var loginUseCase: LoginUseCase
 
     @MockK
     private lateinit var loginRepository: AuthRepository
@@ -41,7 +41,7 @@ class LoginUseCaseTest {
 
         coEvery { loginRepository.login(any(), any()) } returns resultExpected
 
-        val useCaseResult = loginUseCase?.execute("username", "password")
+        val useCaseResult = loginUseCase.execute("username", "password")
 
         useCaseResult shouldBe resultExpected
     }
@@ -53,7 +53,7 @@ class LoginUseCaseTest {
 
         coEvery { loginRepository.login(any(), any()) } returns errorExpected
 
-        val useCaseResult = loginUseCase?.execute("username", "password")
+        val useCaseResult = loginUseCase.execute("username", "password")
 
         useCaseResult shouldBe errorExpected
     }
@@ -63,7 +63,7 @@ class LoginUseCaseTest {
         coEvery { loginRepository.login(any(), any()) } throws Exception()
 
         shouldThrow<Exception> {
-            loginUseCase?.execute("username", "password")
+            loginUseCase.execute("username", "password")
         }
     }
 }

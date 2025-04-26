@@ -7,6 +7,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -106,7 +107,7 @@ class LoginViewModelTest {
 
     @Test
     fun `Test to submit login - Nominal case`() = runTest {
-        val resultExpected = AuthResponse("accessToken", UserDto())
+        val resultExpected = AuthResponse("accessToken", UserDto(id = "12"))
 
         every { validateUsernameUseCase.execute(any()) } returns true
         every { validatePasswordUseCase.execute(any()) } returns true
@@ -114,11 +115,23 @@ class LoginViewModelTest {
             loginUseCase.execute(any(), any())
         } returns Result.Success(resultExpected)
 
+        // Collect events to test channel
+        val events = mutableListOf<LoginEventFromVm>()
+        val job = launch { loginViewModel.events.take(1).toList(events) }
+
+        loginViewModel.onEvent(LoginEventFromUI.ChangeUsername("My username"))
+        loginViewModel.onEvent(LoginEventFromUI.ChangePassword("P@ssw0rd"))
         loginViewModel.onEvent(LoginEventFromUI.SubmitLogin)
 
         advanceUntilIdle()
 
-        // TODO
+        events.firstOrNull() shouldBe LoginEventFromVm.LoginSuccess(
+            accessToken = "accessToken",
+            userId = "12"
+        )
+        loginViewModel.state.value.isPasswordVisible shouldBe false
+
+        job.cancel()
     }
 
     @Test
@@ -131,11 +144,17 @@ class LoginViewModelTest {
             loginUseCase.execute(any(), any())
         } returns Result.Error(resultExpected)
 
+        val events = mutableListOf<LoginEventFromVm>()
+        val job = launch { loginViewModel.events.toList(events) }
+
         loginViewModel.onEvent(LoginEventFromUI.SubmitLogin)
 
         advanceUntilIdle()
 
-        // TODO
+        events.firstOrNull()?.shouldBeInstanceOf<LoginEventFromVm.Error>()
+        loginViewModel.state.value.isPasswordVisible shouldBe false
+
+        job.cancel()
     }
 
     @Test

@@ -78,6 +78,7 @@ fun CreateAccountScreen(
 
                 is CreateAccountEventFromVm.CreateAccountSuccess -> {
                     // Updating accessToken via datastore update the startDestination of the NavHost
+                    // TODO : do it in a usecase
                     context.dataStore.updateData {
                         it.copy(
                             accessToken = event.accessToken,

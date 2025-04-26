@@ -1,8 +1,12 @@
 package renard.remi.ping.domain.repository
 
+import kotlinx.coroutines.flow.Flow
+import renard.remi.ping.data.datastore.AppSettings
 import renard.remi.ping.ui.theme.Palette
 
 interface DatastoreRepository {
+
+    fun observeAppSettings(): Flow<AppSettings>
 
     suspend fun updateAppColors(palette: Palette)
 

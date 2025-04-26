@@ -12,6 +12,8 @@ class DatastoreRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : DatastoreRepository {
 
+    override fun observeAppSettings() = context.dataStore.data
+
     override suspend fun updateAppColors(palette: Palette) {
         context.dataStore.updateData {
             it.copy(palette = palette)

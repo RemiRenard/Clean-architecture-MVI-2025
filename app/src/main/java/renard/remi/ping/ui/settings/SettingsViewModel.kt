@@ -105,6 +105,7 @@ class SettingsViewModel @Inject constructor(
             it.copy(languageSelected = currentLanguage)
         }
         viewModelScope.launch {
+            // TODO : create a usecase
             context.dataStore.updateData {
                 it.copy(currentLanguage = currentLanguage)
             }

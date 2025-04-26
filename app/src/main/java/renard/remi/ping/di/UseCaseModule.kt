@@ -8,12 +8,14 @@ import renard.remi.ping.domain.repository.AuthRepository
 import renard.remi.ping.domain.repository.DatastoreRepository
 import renard.remi.ping.domain.repository.UserRepository
 import renard.remi.ping.domain.use_case.CreateAccountUseCase
+import renard.remi.ping.domain.use_case.GetAccessTokenUseCase
 import renard.remi.ping.domain.use_case.GetDynamicsColorsUseCase
 import renard.remi.ping.domain.use_case.GetIsInDarkModeUseCase
 import renard.remi.ping.domain.use_case.GetMeUseCase
 import renard.remi.ping.domain.use_case.GetPaletteColorsUseCase
 import renard.remi.ping.domain.use_case.LoginUseCase
 import renard.remi.ping.domain.use_case.LogoutUseCase
+import renard.remi.ping.domain.use_case.ObserveAppSettingsUseCase
 import renard.remi.ping.domain.use_case.UpdateAppColorsUseCase
 import renard.remi.ping.domain.use_case.UpdateDarkModeUseCase
 import renard.remi.ping.domain.use_case.UpdateFcmTokenUseCase
@@ -141,6 +143,26 @@ object UseCaseModule {
         datastoreRepository: DatastoreRepository
     ): UseDynamicsColorsUseCase {
         return UseDynamicsColorsUseCase(
+            datastoreRepository = datastoreRepository
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideObserveAppSettingsUseCase(
+        datastoreRepository: DatastoreRepository
+    ): ObserveAppSettingsUseCase {
+        return ObserveAppSettingsUseCase(
+            datastoreRepository = datastoreRepository
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetAccessTokenUseCase(
+        datastoreRepository: DatastoreRepository
+    ): GetAccessTokenUseCase {
+        return GetAccessTokenUseCase(
             datastoreRepository = datastoreRepository
         )
     }

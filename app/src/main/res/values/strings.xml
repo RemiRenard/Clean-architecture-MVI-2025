@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">Ping</string>
+    <string name="auth_title">Welcome to</string>
+
+    <!-- Bottom bar -->
+    <string name="bottom_bar_home">Home</string>
+    <string name="bottom_bar_cv">CV</string>
+    <!-- End bottom bar -->
+
+    <!-- Login Screen -->
+    <string name="login_title">Login</string>
+    <string name="login_field_username">Username</string>
+    <string name="login_field_username_error_msg">Not enough characters</string>
+    <string name="login_field_password">Password</string>
+    <string name="login_field_password_error_msg">Insecure password</string>
+    <string name="login_btn_text">Login</string>
+    <string name="login_go_to_create_account_title">New to Ping?</string>
+    <string name="login_go_to_create_account_subtitle">Register</string>
+    <!-- End Login Screen -->
+
+    <!-- Create account Screen -->
+    <string name="create_account_title">New account</string>
+    <string name="create_account_field_username">Username</string>
+    <string name="create_account_field_username_error_msg">Required 3 characters</string>
+    <string name="create_account_field_password">Password</string>
+    <string name="create_account_field_password_error_msg">Insecure password</string>
+    <string name="create_account_field_confirm_password">Confirm your password</string>
+    <string name="create_account_field_confirm_field_password_error_msg">Password don\'t match</string>
+    <string name="create_account_btn_text">Register</string>
+    <string name="create_account_go_to_login_title">Already have an account?</string>
+    <string name="create_account_go_to_login_subtitle">Login</string>
+    <!-- End Create account Screen -->
+
+    <!-- Errors -->
+    <string name="no_internet">Please verify your internet connection</string>
+    <string name="server_error">Oops, something went wrong. Please try again.</string>
+    <string name="unknown_error">An unknown error occurred</string>
+    <string name="not_found">Not Found</string>
+    <string name="error_disk_full">Failed to save the item because your device\'s disk is full</string>
+    <string name="error_disk_request">Error with the local database</string>
+    <string name="http_error_400">Bad Request</string>
+    <string name="http_error_401">Unauthorized</string>
+    <string name="http_error_409">Conflict</string>
+    <string name="http_error_422">Unprocessable Entity</string>
+    <string name="http_error_503">Bad Request</string>
+    <!-- End Errors -->
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_color_system">Color system</string>
+    <string name="settings_color_switch_dark_mode">Dark mode</string>
+    <string name="settings_color_switch_light_mode">Light mode</string>
+    <string name="settings_customize_colors">Customize your app color</string>
+    <string name="settings_replay_tutorial">Replay tutorial</string>
+    <string name="settings_language_label">Language</string>
+    <string name="settings_logout">Logout</string>
+    <!-- End Settings Screen -->
+
+    <!-- Home Screen -->
+    <string name="home_title">Welcome,\n%1$s</string>
+    <string name="home_add_device">Add device</string>
+    <string name="dialog_detele_device_title">Are you sure to delete this product?</string>
+    <string name="dialog_detele_device_confirm">Yes</string>
+    <string name="dialog_detele_device_dismiss">No</string>
+    <!-- End Home Screen -->
+
+    <!-- Notifications -->
+    <string name="default_channel_id" translatable="false">1</string>
+    <string name="default_channel_name" translatable="false">Chat notification</string>
+    <!-- End Notifications -->
+</resources>

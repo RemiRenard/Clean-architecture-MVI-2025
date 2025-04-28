@@ -5,5 +5,5 @@ import renard.remi.ping.domain.repository.UserRepository
 data class UpdateFcmTokenUseCase(
     private val userRepository: UserRepository,
 ) {
-    suspend fun execute() = userRepository.updateRemoteFcmToken()
+    suspend fun execute(fcmToken: String? = null) = userRepository.updateRemoteFcmToken(fcmToken)
 }

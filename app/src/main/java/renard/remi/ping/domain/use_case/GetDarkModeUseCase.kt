@@ -2,7 +2,7 @@ package renard.remi.ping.domain.use_case
 
 import renard.remi.ping.domain.repository.DatastoreRepository
 
-data class GetIsInDarkModeUseCase(
+data class GetDarkModeUseCase(
     private val datastoreRepository: DatastoreRepository
 ) {
     suspend fun execute() = datastoreRepository.getAppSettings().isInDarkMode

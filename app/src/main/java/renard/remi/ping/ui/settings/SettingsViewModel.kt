@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import renard.remi.ping.domain.use_case.GetDynamicsColorsUseCase
-import renard.remi.ping.domain.use_case.GetIsInDarkModeUseCase
+import renard.remi.ping.domain.use_case.GetDarkModeUseCase
 import renard.remi.ping.domain.use_case.GetPaletteColorsUseCase
 import renard.remi.ping.domain.use_case.LogoutUseCase
 import renard.remi.ping.domain.use_case.UpdateAppColorsUseCase
@@ -29,7 +29,7 @@ class SettingsViewModel @Inject constructor(
     private val useDynamicsColorsUseCase: UseDynamicsColorsUseCase,
     private val getDynamicsColorsUseCase: GetDynamicsColorsUseCase,
     private val getPaletteColorsUseCase: GetPaletteColorsUseCase,
-    private val getIsInDarkModeUseCase: GetIsInDarkModeUseCase,
+    private val getDarkModeUseCase: GetDarkModeUseCase,
     private val updateLanguageUseCase: UpdateLanguageUseCase
 ) : ViewModel() {
 
@@ -92,7 +92,7 @@ class SettingsViewModel @Inject constructor(
                 it.copy(
                     useDynamicsColors = getDynamicsColorsUseCase.execute(),
                     paletteSelected = getPaletteColorsUseCase.execute(),
-                    isInDarkMode = getIsInDarkModeUseCase.execute()
+                    isInDarkMode = getDarkModeUseCase.execute()
                 )
             }
         }

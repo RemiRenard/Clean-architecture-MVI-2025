@@ -10,7 +10,7 @@ import renard.remi.ping.domain.repository.UserRepository
 import renard.remi.ping.domain.use_case.CreateAccountUseCase
 import renard.remi.ping.domain.use_case.GetAccessTokenUseCase
 import renard.remi.ping.domain.use_case.GetDynamicsColorsUseCase
-import renard.remi.ping.domain.use_case.GetIsInDarkModeUseCase
+import renard.remi.ping.domain.use_case.GetDarkModeUseCase
 import renard.remi.ping.domain.use_case.GetMeUseCase
 import renard.remi.ping.domain.use_case.GetPaletteColorsUseCase
 import renard.remi.ping.domain.use_case.LoginUseCase
@@ -106,8 +106,8 @@ object UseCaseModule {
     @Singleton
     fun provideGetIsInDarkModeUseCase(
         datastoreRepository: DatastoreRepository
-    ): GetIsInDarkModeUseCase {
-        return GetIsInDarkModeUseCase(
+    ): GetDarkModeUseCase {
+        return GetDarkModeUseCase(
             datastoreRepository = datastoreRepository
         )
     }

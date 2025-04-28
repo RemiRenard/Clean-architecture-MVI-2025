@@ -53,7 +53,10 @@ import renard.remi.ping.ui.component.AppButton
 import renard.remi.ping.ui.component.AppTextField
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_APP_NAME
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_BUTTON
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_PASSWORD
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_TITLE
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_USERNAME
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_GO_TO_REGISTER
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_WELCOME
 
 @Serializable
@@ -148,6 +151,7 @@ fun LoginScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 12.dp),
+                    testTag = LOGIN_SCREEN_FORM_USERNAME,
                     value = state.username,
                     label = stringResource(R.string.login_field_username),
                     isError = state.usernameError?.asString()?.isNotBlank() == true,
@@ -172,6 +176,7 @@ fun LoginScreen(
                         .focusRequester(FocusRequester())
                         .fillMaxWidth()
                         .padding(horizontal = 12.dp),
+                    testTag = LOGIN_SCREEN_FORM_PASSWORD,
                     value = state.password,
                     label = stringResource(R.string.login_field_password),
                     isPassword = true,
@@ -223,9 +228,11 @@ fun LoginScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        modifier = Modifier.clickable {
-                            onRegisterClicked?.invoke()
-                        },
+                        modifier = Modifier
+                            .testTag(LOGIN_SCREEN_GO_TO_REGISTER)
+                            .clickable {
+                                onRegisterClicked?.invoke()
+                            },
                         text = buildAnnotatedString {
                             append(stringResource(R.string.login_go_to_create_account_title) + " ")
                             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {

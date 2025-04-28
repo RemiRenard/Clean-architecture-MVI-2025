@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import renard.remi.ping.ui.utils.TestTags
 
 @Composable
 fun AppTextField(
@@ -43,7 +45,8 @@ fun AppTextField(
     leadingIcon: (@Composable (() -> Unit))? = null,
     onValueChange: (String) -> Unit,
     onNext: (() -> Unit)? = null,
-    onDone: (() -> Unit)? = null
+    onDone: (() -> Unit)? = null,
+    testTag: String = TestTags.NOT_IMPLEMENTED
 ) {
     Column(modifier = modifier) {
         OutlinedTextField(
@@ -56,7 +59,9 @@ fun AppTextField(
                 }
             },
             isError = isError,
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .fillMaxWidth()
+                .testTag(testTag),
             label = {
                 Text(text = label)
             },

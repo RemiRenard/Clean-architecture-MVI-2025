@@ -7,6 +7,8 @@ import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.rememberNavController
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -22,7 +24,10 @@ import renard.remi.ping.ui.main.MainActivity
 import renard.remi.ping.ui.theme.AppTheme
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_APP_NAME
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_BUTTON
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_PASSWORD
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_TITLE
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_USERNAME
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_GO_TO_REGISTER
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_WELCOME
 
 @HiltAndroidTest
@@ -59,5 +64,24 @@ class LoginScreenTest {
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_TITLE).assertTextEquals("Login")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).assertHasClickAction()
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).assertTextEquals("Login")
+    }
+
+    @Test
+    fun testLoginNominalCase() {
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("My username")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("P@ssw0rd")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
+    }
+
+    @Test
+    fun testLoginErrorCase() {
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("too")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("short")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
+    }
+
+    @Test
+    fun testNavigationToRegisterScreen() {
+        composeRule.onNodeWithTag(LOGIN_SCREEN_GO_TO_REGISTER).performClick()
     }
 }

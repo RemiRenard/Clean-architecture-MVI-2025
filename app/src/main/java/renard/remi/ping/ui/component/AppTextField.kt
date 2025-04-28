@@ -46,7 +46,8 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     onNext: (() -> Unit)? = null,
     onDone: (() -> Unit)? = null,
-    testTag: String = TestTags.NOT_IMPLEMENTED
+    textFieldTestTag: String = TestTags.NOT_IMPLEMENTED,
+    errorMessageTestTag: String = TestTags.NOT_IMPLEMENTED
 ) {
     Column(modifier = modifier) {
         OutlinedTextField(
@@ -61,7 +62,7 @@ fun AppTextField(
             isError = isError,
             modifier = modifier
                 .fillMaxWidth()
-                .testTag(testTag),
+                .testTag(textFieldTestTag),
             label = {
                 Text(text = label)
             },
@@ -100,7 +101,9 @@ fun AppTextField(
         ) {
             if (isError) {
                 Text(
-                    modifier = Modifier.padding(horizontal = 14.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 14.dp)
+                        .testTag(errorMessageTestTag),
                     text = errorMessage ?: "",
                     color = MaterialTheme.colorScheme.error,
                 )

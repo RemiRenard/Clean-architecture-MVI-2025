@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.test.assertHasClickAction
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.rememberNavController
 import androidx.test.platform.app.InstrumentationRegistry
@@ -25,8 +28,10 @@ import renard.remi.ping.ui.theme.AppTheme
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_APP_NAME
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_BUTTON
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_PASSWORD
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_PASSWORD_ERROR
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_TITLE
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_USERNAME
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_USERNAME_ERROR
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_GO_TO_REGISTER
 import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_WELCOME
 
@@ -58,7 +63,7 @@ class LoginScreenTest {
     }
 
     @Test
-    fun testTextScreen() {
+    fun testScreenText() {
         composeRule.onNodeWithTag(LOGIN_SCREEN_WELCOME).assertTextEquals("Welcome to")
         composeRule.onNodeWithTag(LOGIN_SCREEN_APP_NAME).assertTextEquals("Ping")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_TITLE).assertTextEquals("Login")
@@ -75,9 +80,29 @@ class LoginScreenTest {
 
     @Test
     fun testLoginErrorCase() {
-        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("too")
-        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("short")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("Username")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("weak")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME_ERROR).assertIsNotDisplayed()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD_ERROR).assertIsDisplayed()
+
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextClearance()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextClearance()
+
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("12")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("P@ssw0rd")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME_ERROR).assertIsDisplayed()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD_ERROR).assertIsNotDisplayed()
+
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextClearance()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextClearance()
+
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("Username")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("P@ssw0rd")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME_ERROR).assertIsNotDisplayed()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD_ERROR).assertIsNotDisplayed()
     }
 
     @Test

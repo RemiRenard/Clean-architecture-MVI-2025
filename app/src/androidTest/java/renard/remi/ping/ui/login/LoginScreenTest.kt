@@ -73,13 +73,22 @@ class LoginScreenTest {
 
     @Test
     fun testLoginNominalCase() {
-        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("My username")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("Username")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("P@ssw0rd")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
     }
 
     @Test
     fun testLoginErrorCase() {
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("A")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("weak")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME_ERROR).assertIsDisplayed()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD_ERROR).assertIsDisplayed()
+
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextClearance()
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextClearance()
+
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("Username")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("weak")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
@@ -89,7 +98,7 @@ class LoginScreenTest {
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextClearance()
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextClearance()
 
-        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("12")
+        composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME).performTextInput("A")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_PASSWORD).performTextInput("P@ssw0rd")
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_BUTTON).performClick()
         composeRule.onNodeWithTag(LOGIN_SCREEN_FORM_USERNAME_ERROR).assertIsDisplayed()

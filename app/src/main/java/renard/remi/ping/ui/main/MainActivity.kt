@@ -91,11 +91,15 @@ class MainActivity : FragmentActivity() {
         val newConfig = context.resources.configuration
         val currentLanguage = runBlocking { context.dataStore.data.first().currentLanguage }
         currentLanguage?.let {
-            // TODO improve !
-            // FOR NOW I HAVE DECIDED TO TAKE 2 FIRST CHARS OF A HARDCODED STRING
-            // IT'S ONLY FOR DEV !
-            newConfig?.setLocale(Locale(it.take(2).lowercase()))
-            applyOverrideConfiguration(newConfig)
+            try {
+                // TODO improve this
+                // FOR NOW I HAVE DECIDED TO TAKE 2 FIRST CHARS OF A HARDCODED STRING
+                // IT'S ONLY FOR DEV !
+                newConfig?.setLocale(Locale(it.take(2).lowercase()))
+                applyOverrideConfiguration(newConfig)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         super.attachBaseContext(context)
     }

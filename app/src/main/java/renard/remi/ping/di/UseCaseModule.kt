@@ -19,6 +19,7 @@ import renard.remi.ping.domain.use_case.ObserveAppSettingsUseCase
 import renard.remi.ping.domain.use_case.UpdateAppColorsUseCase
 import renard.remi.ping.domain.use_case.UpdateDarkModeUseCase
 import renard.remi.ping.domain.use_case.UpdateFcmTokenUseCase
+import renard.remi.ping.domain.use_case.UpdateLanguageUseCase
 import renard.remi.ping.domain.use_case.UseDynamicsColorsUseCase
 import renard.remi.ping.domain.use_case.ValidatePasswordUseCase
 import renard.remi.ping.domain.use_case.ValidateUsernameUseCase
@@ -167,6 +168,16 @@ object UseCaseModule {
         datastoreRepository: DatastoreRepository
     ): GetAccessTokenUseCase {
         return GetAccessTokenUseCase(
+            datastoreRepository = datastoreRepository
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateLanguageUseCase(
+        datastoreRepository: DatastoreRepository
+    ): UpdateLanguageUseCase {
+        return UpdateLanguageUseCase(
             datastoreRepository = datastoreRepository
         )
     }

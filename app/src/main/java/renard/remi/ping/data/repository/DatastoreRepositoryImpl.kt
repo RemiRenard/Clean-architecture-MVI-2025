@@ -12,11 +12,39 @@ class DatastoreRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : DatastoreRepository {
 
+    override suspend fun getAccessToken() = context.dataStore.data.first().accessToken
+
+    override suspend fun getCurrentUserId() = context.dataStore.data.first().userId
+
+    override suspend fun updateLocalUser(accessToken: String?, userId: String?) {
+        context.dataStore.updateData {
+            it.copy(
+                accessToken = accessToken,
+                userId = userId
+            )
+        }
+    }
+
+    override suspend fun logout() {
+        context.dataStore.updateData {
+            it.copy(
+                accessToken = null,
+                userId = null
+            )
+        }
+    }
+
     override fun observeAppSettings() = context.dataStore.data
 
     override suspend fun updateAppColors(palette: Palette) {
         context.dataStore.updateData {
             it.copy(palette = palette)
+        }
+    }
+
+    override suspend fun updateLanguage(language: String) {
+        context.dataStore.updateData {
+            it.copy(currentLanguage = language)
         }
     }
 
@@ -37,26 +65,4 @@ class DatastoreRepositoryImpl @Inject constructor(
     override suspend fun getIsInDarkMode() = context.dataStore.data.first().isInDarkMode
 
     override suspend fun getPaletteColors() = context.dataStore.data.first().palette
-
-    override suspend fun logout() {
-        context.dataStore.updateData {
-            it.copy(
-                accessToken = null,
-                userId = null
-            )
-        }
-    }
-
-    override suspend fun getAccessToken() = context.dataStore.data.first().accessToken
-
-    override suspend fun updateLocalUser(accessToken: String?, userId: String?) {
-        context.dataStore.updateData {
-            it.copy(
-                accessToken = accessToken,
-                userId = userId
-            )
-        }
-    }
-
-    override suspend fun getCurrentUserId() = context.dataStore.data.first().userId
 }

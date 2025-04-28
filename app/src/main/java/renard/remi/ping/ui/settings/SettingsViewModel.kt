@@ -1,10 +1,8 @@
 package renard.remi.ping.ui.settings
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,14 +16,13 @@ import renard.remi.ping.domain.use_case.GetPaletteColorsUseCase
 import renard.remi.ping.domain.use_case.LogoutUseCase
 import renard.remi.ping.domain.use_case.UpdateAppColorsUseCase
 import renard.remi.ping.domain.use_case.UpdateDarkModeUseCase
+import renard.remi.ping.domain.use_case.UpdateLanguageUseCase
 import renard.remi.ping.domain.use_case.UseDynamicsColorsUseCase
-import renard.remi.ping.extension.dataStore
 import renard.remi.ping.ui.theme.Palette
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val logoutUseCase: LogoutUseCase,
     private val updateAppColorsUseCase: UpdateAppColorsUseCase,
     private val setDarkModeUseCase: UpdateDarkModeUseCase,
@@ -33,6 +30,7 @@ class SettingsViewModel @Inject constructor(
     private val getDynamicsColorsUseCase: GetDynamicsColorsUseCase,
     private val getPaletteColorsUseCase: GetPaletteColorsUseCase,
     private val getIsInDarkModeUseCase: GetIsInDarkModeUseCase,
+    private val updateLanguageUseCase: UpdateLanguageUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<SettingsState> = MutableStateFlow(SettingsState())
@@ -105,10 +103,7 @@ class SettingsViewModel @Inject constructor(
             it.copy(languageSelected = currentLanguage)
         }
         viewModelScope.launch {
-            // TODO : create a usecase
-            context.dataStore.updateData {
-                it.copy(currentLanguage = currentLanguage)
-            }
+            updateLanguageUseCase.execute(currentLanguage)
             _eventChannel.send(SettingsEventFromVm.OnLanguageChanged)
         }
     }

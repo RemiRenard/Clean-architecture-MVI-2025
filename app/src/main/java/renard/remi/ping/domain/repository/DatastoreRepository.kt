@@ -6,15 +6,13 @@ import renard.remi.ping.ui.theme.Palette
 
 interface DatastoreRepository {
 
-    suspend fun getAccessToken(): String?
-
     suspend fun updateLocalUser(accessToken: String?, userId: String?)
-
-    suspend fun getCurrentUserId(): String?
 
     suspend fun logout()
 
     fun observeAppSettings(): Flow<AppSettings>
+
+    suspend fun getAppSettings(): AppSettings
 
     suspend fun updateAppColors(palette: Palette)
 
@@ -23,10 +21,4 @@ interface DatastoreRepository {
     suspend fun useDynamicsColors(shouldUse: Boolean)
 
     suspend fun setDarkMode(isInDarkMode: Boolean)
-
-    suspend fun getDynamicsColors(): Boolean
-
-    suspend fun getIsInDarkMode(): Boolean
-
-    suspend fun getPaletteColors(): Palette?
 }

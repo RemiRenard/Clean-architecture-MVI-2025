@@ -5,5 +5,5 @@ import renard.remi.ping.domain.repository.DatastoreRepository
 data class GetIsInDarkModeUseCase(
     private val datastoreRepository: DatastoreRepository
 ) {
-    suspend fun execute() = datastoreRepository.getIsInDarkMode()
+    suspend fun execute() = datastoreRepository.getAppSettings().isInDarkMode
 }

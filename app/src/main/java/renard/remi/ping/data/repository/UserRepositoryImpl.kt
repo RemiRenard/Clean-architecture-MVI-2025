@@ -28,11 +28,10 @@ class UserRepositoryImpl @Inject constructor(
         return if (forceRefresh) {
             getRemoteUser()
         } else {
-            val currentUser =
-                getLocalUserById(userId = datastoreRepository.getCurrentUserId() ?: "")
-            return if (currentUser is Result.Success && currentUser.data != null) {
-                Result.Success(currentUser.data.toDomain())
-            } else if (currentUser is Result.Error) {
+            val user = getLocalUserById(userId = datastoreRepository.getAppSettings().userId ?: "")
+            return if (user is Result.Success && user.data != null) {
+                Result.Success(user.data.toDomain())
+            } else if (user is Result.Error) {
                 Result.Error(DataError.Local.REQUEST_ERROR)
             } else {
                 getRemoteUser()
@@ -44,7 +43,7 @@ class UserRepositoryImpl @Inject constructor(
         return try {
             Result.Success(
                 apiService.updateFcmToken(
-                    accessToken = "Bearer " + datastoreRepository.getAccessToken(),
+                    accessToken = "Bearer " + datastoreRepository.getAppSettings().accessToken,
                     updateFcmTokenRequest = UpdateFcmTokenRequest(
                         fcmToken = fcmToken ?: Firebase.messaging.token.await()
                     )
@@ -66,7 +65,7 @@ class UserRepositoryImpl @Inject constructor(
     private suspend fun getRemoteUser(): Result<User?, DataError.Network> {
         return try {
             val user = apiService.getMe(
-                accessToken = "Bearer " + datastoreRepository.getAccessToken()
+                accessToken = "Bearer " + datastoreRepository.getAppSettings().accessToken
             )
 
             user?.let {

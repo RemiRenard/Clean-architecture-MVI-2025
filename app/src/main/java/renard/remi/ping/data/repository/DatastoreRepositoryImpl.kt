@@ -12,9 +12,9 @@ class DatastoreRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : DatastoreRepository {
 
-    override suspend fun getAccessToken() = context.dataStore.data.first().accessToken
+    override fun observeAppSettings() = context.dataStore.data
 
-    override suspend fun getCurrentUserId() = context.dataStore.data.first().userId
+    override suspend fun getAppSettings() = context.dataStore.data.first()
 
     override suspend fun updateLocalUser(accessToken: String?, userId: String?) {
         context.dataStore.updateData {
@@ -33,8 +33,6 @@ class DatastoreRepositoryImpl @Inject constructor(
             )
         }
     }
-
-    override fun observeAppSettings() = context.dataStore.data
 
     override suspend fun updateAppColors(palette: Palette) {
         context.dataStore.updateData {
@@ -59,10 +57,4 @@ class DatastoreRepositoryImpl @Inject constructor(
             it.copy(isInDarkMode = isInDarkMode)
         }
     }
-
-    override suspend fun getDynamicsColors() = context.dataStore.data.first().useDynamicColors
-
-    override suspend fun getIsInDarkMode() = context.dataStore.data.first().isInDarkMode
-
-    override suspend fun getPaletteColors() = context.dataStore.data.first().palette
 }

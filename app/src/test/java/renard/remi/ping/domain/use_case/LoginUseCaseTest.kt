@@ -3,7 +3,6 @@ package renard.remi.ping.domain.use_case
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.test.runTest
@@ -20,7 +19,6 @@ import renard.remi.ping.domain.repository.DatastoreRepository
 @ExtendWith(MockKExtension::class)
 class LoginUseCaseTest {
 
-    @InjectMockKs
     private lateinit var loginUseCase: LoginUseCase
 
     @MockK

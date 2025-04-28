@@ -5,5 +5,5 @@ import renard.remi.ping.domain.repository.DatastoreRepository
 data class GetPaletteColorsUseCase(
     private val datastoreRepository: DatastoreRepository
 ) {
-    suspend fun execute() = datastoreRepository.getPaletteColors()
+    suspend fun execute() = datastoreRepository.getAppSettings().palette
 }

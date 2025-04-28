@@ -5,5 +5,5 @@ import renard.remi.ping.domain.repository.DatastoreRepository
 data class GetAccessTokenUseCase(
     private val datastoreRepository: DatastoreRepository
 ) {
-    suspend fun execute() = datastoreRepository.getAccessToken()
+    suspend fun execute() = datastoreRepository.getAppSettings().accessToken
 }

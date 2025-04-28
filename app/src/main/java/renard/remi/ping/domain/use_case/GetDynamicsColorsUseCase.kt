@@ -6,5 +6,5 @@ import renard.remi.ping.domain.repository.DatastoreRepository
 data class GetDynamicsColorsUseCase(
     private val datastoreRepository: DatastoreRepository
 ) {
-    suspend fun execute() = datastoreRepository.getDynamicsColors()
+    suspend fun execute() = datastoreRepository.getAppSettings().useDynamicColors
 }

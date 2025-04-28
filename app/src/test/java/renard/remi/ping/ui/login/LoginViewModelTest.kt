@@ -15,10 +15,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import renard.remi.ping.data.network.dto.UserDto
-import renard.remi.ping.data.network.dto.response.AuthResponse
+import renard.remi.ping.domain.model.AuthResult
 import renard.remi.ping.domain.model.DataError
 import renard.remi.ping.domain.model.Result
+import renard.remi.ping.domain.model.User
 import renard.remi.ping.domain.use_case.LoginUseCase
 import renard.remi.ping.domain.use_case.ValidatePasswordUseCase
 import renard.remi.ping.domain.use_case.ValidateUsernameUseCase
@@ -107,7 +107,7 @@ class LoginViewModelTest {
 
     @Test
     fun `Test to submit login - Nominal case`() = runTest {
-        val resultExpected = AuthResponse("accessToken", UserDto(id = "12"))
+        val resultExpected = AuthResult("accessToken", User())
 
         every { validateUsernameUseCase.execute(any()) } returns true
         every { validatePasswordUseCase.execute(any()) } returns true
@@ -156,7 +156,7 @@ class LoginViewModelTest {
 
     @Test
     fun `Test to submit login - Username error case`() = runTest {
-        val resultExpected = AuthResponse("accessToken", UserDto())
+        val resultExpected = AuthResult("accessToken", User())
 
         every { validateUsernameUseCase.execute(any()) } returns false
         every { validatePasswordUseCase.execute(any()) } returns true
@@ -174,7 +174,7 @@ class LoginViewModelTest {
 
     @Test
     fun `Test to submit login - Password error case`() = runTest {
-        val resultExpected = AuthResponse("accessToken", UserDto())
+        val resultExpected = AuthResult("accessToken", User())
 
         every { validateUsernameUseCase.execute(any()) } returns true
         every { validatePasswordUseCase.execute(any()) } returns false

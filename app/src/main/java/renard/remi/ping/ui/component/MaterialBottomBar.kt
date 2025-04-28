@@ -18,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import renard.remi.ping.domain.model.BaseRoute
 import renard.remi.ping.extension.removeAllAfterSlash
 import renard.remi.ping.ui.home.HomeScreenRoute
+import renard.remi.ping.ui.theme.PingTheme
 
 data class BottomNavigationItem(
     @StringRes val title: Int,
@@ -93,5 +95,17 @@ fun MaterialBottomBar(
                 )
             }
         }
+    }
+}
+
+@Composable
+@Preview(device = "id:pixel_9")
+private fun MainScreenPreview() {
+    PingTheme {
+        MaterialBottomBar(
+            isVisible = true,
+            currentRoute = "",
+            onTabClicked = {},
+        )
     }
 }

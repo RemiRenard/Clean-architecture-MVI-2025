@@ -6,8 +6,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.tasks.await
 import renard.remi.ping.data.db.dao.UserDao
 import renard.remi.ping.data.db.dbo.UserDbo
+import renard.remi.ping.data.db.toDomain
 import renard.remi.ping.data.network.ApiService
 import renard.remi.ping.data.network.dto.request.UpdateFcmTokenRequest
+import renard.remi.ping.data.network.toDomain
 import renard.remi.ping.domain.model.DataError
 import renard.remi.ping.domain.model.Result
 import renard.remi.ping.domain.model.User
@@ -26,53 +28,15 @@ class UserRepositoryImpl @Inject constructor(
         return if (forceRefresh) {
             getRemoteUser()
         } else {
-            val currentUser = getLocalUserById(userId = datastoreRepository.getCurrentUserId() ?: "")
+            val currentUser =
+                getLocalUserById(userId = datastoreRepository.getCurrentUserId() ?: "")
             return if (currentUser is Result.Success && currentUser.data != null) {
-                Result.Success(currentUser.data.toUser())
+                Result.Success(currentUser.data.toDomain())
             } else if (currentUser is Result.Error) {
                 Result.Error(DataError.Local.REQUEST_ERROR)
             } else {
                 getRemoteUser()
             }
-        }
-    }
-
-    private suspend fun getRemoteUser(): Result<User?, DataError.Network> {
-        return try {
-            val user = apiService.getMe(
-                accessToken = "Bearer " + datastoreRepository.getAccessToken()
-            )?.toUser()
-
-            user?.let {
-                userDao.insertUser(
-                    UserDbo(
-                        remoteId = it.id ?: "",
-                        username = it.username ?: "",
-                        refreshToken = it.refreshToken ?: ""
-                    )
-                )
-            }
-            Result.Success(user)
-        } catch (error: Exception) {
-            if (error is HttpException) {
-                when (error.code()) {
-                    401 -> Result.Error(DataError.Network.UNAUTHORIZED)
-                    500 -> Result.Error(DataError.Network.SERVER_ERROR)
-                    else -> Result.Error(DataError.Network.UNKNOWN)
-                }
-            } else {
-                Result.Error(DataError.Network.NO_INTERNET)
-            }
-        }
-    }
-
-    private suspend fun getLocalUserById(userId: String): Result<UserDbo?, DataError.Local> {
-        return try {
-            val user = userDao.findUserById(userId = userId).firstOrNull()
-                ?.firstOrNull()
-            Result.Success(user)
-        } catch (error: Exception) {
-            Result.Error(DataError.Local.REQUEST_ERROR)
         }
     }
 
@@ -96,6 +60,45 @@ class UserRepositoryImpl @Inject constructor(
             } else {
                 Result.Error(DataError.Network.NO_INTERNET)
             }
+        }
+    }
+
+    private suspend fun getRemoteUser(): Result<User?, DataError.Network> {
+        return try {
+            val user = apiService.getMe(
+                accessToken = "Bearer " + datastoreRepository.getAccessToken()
+            )
+
+            user?.let {
+                userDao.insertUser(
+                    UserDbo(
+                        remoteId = it.id ?: "",
+                        username = it.username ?: "",
+                        refreshToken = it.refreshToken ?: ""
+                    )
+                )
+            }
+            Result.Success(user?.toDomain())
+        } catch (error: Exception) {
+            if (error is HttpException) {
+                when (error.code()) {
+                    401 -> Result.Error(DataError.Network.UNAUTHORIZED)
+                    500 -> Result.Error(DataError.Network.SERVER_ERROR)
+                    else -> Result.Error(DataError.Network.UNKNOWN)
+                }
+            } else {
+                Result.Error(DataError.Network.NO_INTERNET)
+            }
+        }
+    }
+
+    private suspend fun getLocalUserById(userId: String): Result<UserDbo?, DataError.Local> {
+        return try {
+            val user = userDao.findUserById(userId = userId).firstOrNull()
+                ?.firstOrNull()
+            Result.Success(user)
+        } catch (error: Exception) {
+            Result.Error(DataError.Local.REQUEST_ERROR)
         }
     }
 }

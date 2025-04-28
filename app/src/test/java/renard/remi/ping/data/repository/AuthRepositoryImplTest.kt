@@ -14,6 +14,7 @@ import renard.remi.ping.data.db.dao.UserDao
 import renard.remi.ping.data.network.ApiService
 import renard.remi.ping.data.network.dto.UserDto
 import renard.remi.ping.data.network.dto.response.AuthResponse
+import renard.remi.ping.data.network.toDomain
 import renard.remi.ping.domain.model.DataError
 import renard.remi.ping.domain.model.Result
 import retrofit2.HttpException
@@ -45,7 +46,7 @@ class AuthRepositoryImplTest {
 
         val actualResult = authRepository.login("username", "password")
 
-        actualResult shouldBe Result.Success(expectedAuthResponse)
+        actualResult shouldBe Result.Success(expectedAuthResponse.toDomain())
     }
 
     @Test
@@ -112,7 +113,7 @@ class AuthRepositoryImplTest {
 
         val actualResult = authRepository.createAccount("username", "password")
 
-        actualResult shouldBe Result.Success(expectedAuthResponse)
+        actualResult shouldBe Result.Success(expectedAuthResponse.toDomain())
     }
 
     @Test

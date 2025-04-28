@@ -18,10 +18,10 @@ import renard.remi.ping.domain.repository.AuthRepository
 import renard.remi.ping.domain.repository.DatastoreRepository
 
 @ExtendWith(MockKExtension::class)
-class LoginUseCaseTest {
+class CreateAccountUseCaseTest {
 
     @InjectMockKs
-    private lateinit var loginUseCase: LoginUseCase
+    private lateinit var createAccountUseCase: CreateAccountUseCase
 
     @MockK
     private lateinit var authRepository: AuthRepository
@@ -31,14 +31,14 @@ class LoginUseCaseTest {
 
     @BeforeEach
     fun setUp() {
-        loginUseCase = LoginUseCase(
+        createAccountUseCase = CreateAccountUseCase(
             authRepository = authRepository,
             datastoreRepository = datastoreRepository
         )
     }
 
     @Test
-    fun `Login - Nominal case`() = runTest {
+    fun `Create an account - Nominal case`() = runTest {
         val resultExpected = Result.Success<AuthResult, DataError.Network>(
             AuthResult(
                 accessToken = "accessToken",
@@ -46,32 +46,32 @@ class LoginUseCaseTest {
             )
         )
 
-        coEvery { authRepository.login(any(), any()) } returns resultExpected
+        coEvery { authRepository.createAccount(any(), any()) } returns resultExpected
         coEvery { datastoreRepository.updateLocalUser(any(), any()) } returns Unit
 
-        val useCaseResult = loginUseCase.execute("username", "password")
+        val useCaseResult = createAccountUseCase.execute("username", "password")
 
         useCaseResult shouldBe resultExpected
     }
 
     @Test
-    fun `Login - Error case Error Network`() = runTest {
+    fun `Create an account - Error case Error Network`() = runTest {
         val errorExpected =
             Result.Error<AuthResult, DataError.Network>(DataError.Network.NO_INTERNET)
 
-        coEvery { authRepository.login(any(), any()) } returns errorExpected
+        coEvery { authRepository.createAccount(any(), any()) } returns errorExpected
 
-        val useCaseResult = loginUseCase.execute("username", "password")
+        val useCaseResult = createAccountUseCase.execute("username", "password")
 
         useCaseResult shouldBe errorExpected
     }
 
     @Test
-    fun `Login - Error case throws Exception`() = runTest {
+    fun `Create an account - Error case throws Exception`() = runTest {
         coEvery { authRepository.login(any(), any()) } throws Exception()
 
         shouldThrow<Exception> {
-            loginUseCase.execute("username", "password")
+            createAccountUseCase.execute("username", "password")
         }
     }
 }

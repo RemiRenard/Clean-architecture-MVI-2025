@@ -4,7 +4,8 @@ import renard.remi.ping.data.db.dao.UserDao
 import renard.remi.ping.data.db.dbo.UserDbo
 import renard.remi.ping.data.network.ApiService
 import renard.remi.ping.data.network.dto.request.AuthRequest
-import renard.remi.ping.data.network.dto.response.AuthResponse
+import renard.remi.ping.data.network.toDomain
+import renard.remi.ping.domain.model.AuthResult
 import renard.remi.ping.domain.model.DataError
 import renard.remi.ping.domain.model.Result
 import renard.remi.ping.domain.repository.AuthRepository
@@ -19,7 +20,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun login(
         username: String,
         password: String
-    ): Result<AuthResponse, DataError.Network> {
+    ): Result<AuthResult, DataError.Network> {
         return try {
             val authResponse =
                 apiService.login(AuthRequest(username = username, password = password))
@@ -30,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
                     refreshToken = authResponse.user.refreshToken ?: ""
                 )
             )
-            Result.Success(authResponse)
+            Result.Success(authResponse.toDomain())
         } catch (error: Exception) {
             if (error is HttpException) {
                 when (error.code()) {
@@ -47,7 +48,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun createAccount(
         username: String,
         password: String
-    ): Result<AuthResponse, DataError.Network> {
+    ): Result<AuthResult, DataError.Network> {
         return try {
             val authResponse = apiService.createAccount(
                 authRequest = AuthRequest(
@@ -62,7 +63,7 @@ class AuthRepositoryImpl @Inject constructor(
                     refreshToken = authResponse.user.refreshToken ?: ""
                 )
             )
-            Result.Success(authResponse)
+            Result.Success(authResponse.toDomain())
         } catch (error: Exception) {
             if (error is HttpException) {
                 when (error.code()) {

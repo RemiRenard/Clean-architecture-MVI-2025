@@ -15,6 +15,7 @@ import renard.remi.ping.data.network.dto.response.AuthResponse
 import renard.remi.ping.domain.model.DataError
 import renard.remi.ping.domain.model.Result
 import renard.remi.ping.domain.repository.AuthRepository
+import renard.remi.ping.domain.repository.DatastoreRepository
 
 @ExtendWith(MockKExtension::class)
 class LoginUseCaseTest {
@@ -23,11 +24,17 @@ class LoginUseCaseTest {
     private lateinit var loginUseCase: LoginUseCase
 
     @MockK
-    private lateinit var loginRepository: AuthRepository
+    private lateinit var authRepository: AuthRepository
+
+    @MockK
+    private lateinit var datastoreRepository: DatastoreRepository
 
     @BeforeEach
     fun setUp() {
-        loginUseCase = LoginUseCase(loginRepository)
+        loginUseCase = LoginUseCase(
+            authRepository = authRepository,
+            datastoreRepository = datastoreRepository
+        )
     }
 
     @Test
@@ -39,7 +46,8 @@ class LoginUseCaseTest {
             )
         )
 
-        coEvery { loginRepository.login(any(), any()) } returns resultExpected
+        coEvery { authRepository.login(any(), any()) } returns resultExpected
+        coEvery { datastoreRepository.updateLocalUser(any(), any()) } returns Unit
 
         val useCaseResult = loginUseCase.execute("username", "password")
 
@@ -51,7 +59,7 @@ class LoginUseCaseTest {
         val errorExpected =
             Result.Error<AuthResponse, DataError.Network>(DataError.Network.NO_INTERNET)
 
-        coEvery { loginRepository.login(any(), any()) } returns errorExpected
+        coEvery { authRepository.login(any(), any()) } returns errorExpected
 
         val useCaseResult = loginUseCase.execute("username", "password")
 
@@ -60,7 +68,7 @@ class LoginUseCaseTest {
 
     @Test
     fun `Login - Error case throws Exception`() = runTest {
-        coEvery { loginRepository.login(any(), any()) } throws Exception()
+        coEvery { authRepository.login(any(), any()) } throws Exception()
 
         shouldThrow<Exception> {
             loginUseCase.execute("username", "password")

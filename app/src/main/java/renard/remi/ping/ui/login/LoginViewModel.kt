@@ -99,21 +99,12 @@ class LoginViewModel @Inject constructor(
             when (val result = loginUseCase.execute(_state.value.username, _state.value.password)) {
                 is Result.Error -> {
                     _state.update { it.copy(isLoading = false) }
-                    _eventChannel.send(
-                        LoginEventFromVm.Error(
-                            result.error.asUiText()
-                        )
-                    )
+                    _eventChannel.send(LoginEventFromVm.Error(result.error.asUiText()))
                 }
 
                 is Result.Success -> {
                     _state.update { it.copy(isLoading = false) }
-                    _eventChannel.send(
-                        LoginEventFromVm.LoginSuccess(
-                            accessToken = result.data.accessToken ?: "",
-                            userId = result.data.user.id ?: ""
-                        )
-                    )
+                    _eventChannel.send(LoginEventFromVm.LoginSuccess)
                 }
             }
         }
@@ -129,5 +120,5 @@ sealed interface LoginEventFromUI {
 
 sealed interface LoginEventFromVm {
     data class Error(val errorMessage: UiText) : LoginEventFromVm
-    data class LoginSuccess(val accessToken: String, val userId: String) : LoginEventFromVm
+    data object LoginSuccess : LoginEventFromVm
 }

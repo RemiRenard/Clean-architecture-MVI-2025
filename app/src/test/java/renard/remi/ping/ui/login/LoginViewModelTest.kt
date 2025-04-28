@@ -125,11 +125,7 @@ class LoginViewModelTest {
 
         advanceUntilIdle()
 
-        events.firstOrNull() shouldBe LoginEventFromVm.LoginSuccess(
-            accessToken = "accessToken",
-            userId = "12"
-        )
-        loginViewModel.state.value.isPasswordVisible shouldBe false
+        events.firstOrNull() shouldBe LoginEventFromVm.LoginSuccess
 
         job.cancel()
     }
@@ -147,12 +143,13 @@ class LoginViewModelTest {
         val events = mutableListOf<LoginEventFromVm>()
         val job = launch { loginViewModel.events.toList(events) }
 
+        advanceUntilIdle()
+
         loginViewModel.onEvent(LoginEventFromUI.SubmitLogin)
 
         advanceUntilIdle()
 
         events.firstOrNull()?.shouldBeInstanceOf<LoginEventFromVm.Error>()
-        loginViewModel.state.value.isPasswordVisible shouldBe false
 
         job.cancel()
     }

@@ -49,5 +49,14 @@ class DatastoreRepositoryImpl @Inject constructor(
 
     override suspend fun getAccessToken() = context.dataStore.data.first().accessToken
 
+    override suspend fun updateLocalUser(accessToken: String?, userId: String?) {
+        context.dataStore.updateData {
+            it.copy(
+                accessToken = accessToken,
+                userId = userId
+            )
+        }
+    }
+
     override suspend fun getCurrentUserId() = context.dataStore.data.first().userId
 }

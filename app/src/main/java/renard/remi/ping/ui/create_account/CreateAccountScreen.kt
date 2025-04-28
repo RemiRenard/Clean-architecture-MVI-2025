@@ -47,7 +47,6 @@ import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 import renard.remi.ping.extension.UiText
-import renard.remi.ping.extension.dataStore
 import renard.remi.ping.ui.component.AppButton
 import renard.remi.ping.ui.component.AppTextField
 
@@ -77,14 +76,8 @@ fun CreateAccountScreen(
                 }
 
                 is CreateAccountEventFromVm.CreateAccountSuccess -> {
-                    // Updating accessToken via datastore update the startDestination of the NavHost
-                    // TODO : do it in a usecase
-                    context.dataStore.updateData {
-                        it.copy(
-                            accessToken = event.accessToken,
-                            userId = event.userId
-                        )
-                    }
+                    // Do nothing here, redirection is managed by the navHost which collect
+                    // information from datastore to handle startDestination
                 }
             }
         }

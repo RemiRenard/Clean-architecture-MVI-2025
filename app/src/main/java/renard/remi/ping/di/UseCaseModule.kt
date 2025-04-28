@@ -40,10 +40,12 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideLoginUseCase(
-        authRepository: AuthRepository
+        authRepository: AuthRepository,
+        datastoreRepository: DatastoreRepository
     ): LoginUseCase {
         return LoginUseCase(
-            authRepository = authRepository
+            authRepository = authRepository,
+            datastoreRepository = datastoreRepository
         )
     }
 
@@ -60,10 +62,12 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideCreateAccountUseCase(
-        authRepository: AuthRepository
+        authRepository: AuthRepository,
+        datastoreRepository: DatastoreRepository
     ): CreateAccountUseCase {
         return CreateAccountUseCase(
-            authRepository = authRepository
+            authRepository = authRepository,
+            datastoreRepository = datastoreRepository
         )
     }
 

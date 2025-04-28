@@ -24,5 +24,7 @@ interface DatastoreRepository {
 
     suspend fun getAccessToken(): String?
 
+    suspend fun updateLocalUser(accessToken: String?, userId: String?)
+
     suspend fun getCurrentUserId(): String?
 }

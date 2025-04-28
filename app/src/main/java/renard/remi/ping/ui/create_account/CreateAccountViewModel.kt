@@ -132,12 +132,7 @@ class CreateAccountViewModel @Inject constructor(
 
                 is Result.Success -> {
                     _state.update { it.copy(isLoading = false) }
-                    _eventChannel.send(
-                        CreateAccountEventFromVm.CreateAccountSuccess(
-                            accessToken = result.data.accessToken ?: "",
-                            userId = result.data.user.id ?: ""
-                        )
-                    )
+                    _eventChannel.send(CreateAccountEventFromVm.CreateAccountSuccess)
                 }
             }
         }
@@ -155,6 +150,5 @@ sealed interface CreateAccountEventFromUI {
 
 sealed interface CreateAccountEventFromVm {
     data class Error(val errorMessage: UiText) : CreateAccountEventFromVm
-    data class CreateAccountSuccess(val accessToken: String, val userId: String) :
-        CreateAccountEventFromVm
+    data object CreateAccountSuccess : CreateAccountEventFromVm
 }

@@ -43,7 +43,7 @@ import renard.remi.ping.ui.component.AppButton
 import renard.remi.ping.ui.settings.component.AppExposedDropdownMenuBox
 import renard.remi.ping.ui.settings.component.CardSettingsSwitch
 import renard.remi.ping.ui.theme.Palette
-import renard.remi.ping.ui.theme.PingTheme
+import renard.remi.ping.ui.theme.AppTheme
 import renard.remi.ping.ui.theme.getPrimaryColorByPalette
 
 @Serializable
@@ -199,7 +199,7 @@ fun SettingsScreen(
 @Preview(showBackground = true)
 @Composable
 fun SettingsScreenPreview() {
-    PingTheme {
+    AppTheme {
         SettingsScreen(
             state = SettingsState()
         )

@@ -10,7 +10,7 @@ import renard.remi.ping.data.datastore.AppSettings
 import renard.remi.ping.extension.dataStore
 
 @Composable
-fun PingTheme(
+fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

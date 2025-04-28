@@ -52,7 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import renard.remi.ping.extension.removeAllAfterSlash
-import renard.remi.ping.ui.theme.PingTheme
+import renard.remi.ping.ui.theme.AppTheme
 import kotlin.math.PI
 import kotlin.math.sin
 
@@ -297,7 +297,7 @@ operator fun PaddingValues.times(value: Float): PaddingValues = PaddingValues(
 @Composable
 @Preview(device = "id:pixel_9")
 private fun MainScreenPreview() {
-    PingTheme {
+    AppTheme {
         CustomBottomBar(
             isVisible = true,
             currentRoute = "",

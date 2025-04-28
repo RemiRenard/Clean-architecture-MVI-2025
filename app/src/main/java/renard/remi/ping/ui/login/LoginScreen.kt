@@ -34,6 +34,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -50,6 +51,10 @@ import renard.remi.ping.domain.model.BaseRoute
 import renard.remi.ping.extension.UiText
 import renard.remi.ping.ui.component.AppButton
 import renard.remi.ping.ui.component.AppTextField
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_APP_NAME
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_BUTTON
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_FORM_TITLE
+import renard.remi.ping.ui.utils.TestTags.LOGIN_SCREEN_WELCOME
 
 @Serializable
 object LoginScreenRoute : BaseRoute
@@ -93,7 +98,8 @@ fun LoginScreen(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = 24.dp)
+                .testTag(LOGIN_SCREEN_WELCOME),
             text = stringResource(R.string.auth_title),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
@@ -103,7 +109,8 @@ fun LoginScreen(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = 24.dp)
+                .testTag(LOGIN_SCREEN_APP_NAME),
             style = MaterialTheme.typography.titleMedium,
             text = stringResource(R.string.app_name),
             textAlign = TextAlign.Left
@@ -129,7 +136,8 @@ fun LoginScreen(
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 24.dp),
+                        .padding(horizontal = 24.dp)
+                        .testTag(LOGIN_SCREEN_FORM_TITLE),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.ExtraLight,
                     text = stringResource(R.string.login_title),
@@ -197,7 +205,8 @@ fun LoginScreen(
                     AppButton(
                         modifier = Modifier
                             .padding(horizontal = 24.dp)
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .testTag(LOGIN_SCREEN_FORM_BUTTON),
                         onClick = {
                             onEvent(LoginEventFromUI.SubmitLogin)
                         },

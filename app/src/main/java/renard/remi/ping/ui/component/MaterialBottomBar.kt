@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import renard.remi.ping.domain.model.BaseRoute
 import renard.remi.ping.extension.removeAllAfterSlash
 import renard.remi.ping.ui.home.HomeScreenRoute
-import renard.remi.ping.ui.theme.PingTheme
+import renard.remi.ping.ui.theme.AppTheme
 
 data class BottomNavigationItem(
     @StringRes val title: Int,
@@ -101,7 +101,7 @@ fun MaterialBottomBar(
 @Composable
 @Preview(device = "id:pixel_9")
 private fun MainScreenPreview() {
-    PingTheme {
+    AppTheme {
         MaterialBottomBar(
             isVisible = true,
             currentRoute = "",

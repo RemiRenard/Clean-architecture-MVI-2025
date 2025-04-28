@@ -30,7 +30,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "renard.remi.ping.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -109,5 +109,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Instrumented Tests
-    testImplementation(libs.robolectric)
+    androidTestImplementation(libs.hilt.test)
+    kspAndroidTest(libs.hilt.compiler.test)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.compose.test)
 }

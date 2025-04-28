@@ -1,0 +1,9 @@
+package renard.remi.ping.ui.utils
+
+object TestTags {
+
+    const val LOGIN_SCREEN_WELCOME = "LOGIN_SCREEN_WELCOME"
+    const val LOGIN_SCREEN_APP_NAME = "LOGIN_SCREEN_APP_NAME"
+    const val LOGIN_SCREEN_FORM_TITLE = "LOGIN_SCREEN_FORM_TITLE"
+    const val LOGIN_SCREEN_FORM_BUTTON = "LOGIN_SCREEN_FORM_BUTTON"
+}

@@ -26,7 +26,7 @@ import renard.remi.ping.ui.create_account.CreateAccountScreenRoute
 import renard.remi.ping.ui.home.HomeScreenRoute
 import renard.remi.ping.ui.login.LoginScreenRoute
 import renard.remi.ping.ui.settings.SettingsScreenRoute
-import renard.remi.ping.ui.theme.PingTheme
+import renard.remi.ping.ui.theme.AppTheme
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -37,7 +37,7 @@ class MainActivity : FragmentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            PingTheme {
+            AppTheme {
                 val navController = rememberNavController()
                 val mainViewModel = hiltViewModel<MainViewModel>()
                 val mainState by mainViewModel.state.collectAsStateWithLifecycle()

@@ -2,17 +2,17 @@
 agp = "8.9.2"
 kotlin = "2.1.10"
 coreKtx = "1.16.0"
-lifecycleRuntimeKtx = "2.8.7"
+lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
-composeBom = "2025.04.01"
-composeNavigation = "2.8.9"
+composeBom = "2025.05.00"
+composeNavigation = "2.9.0"
 serialization = "1.7.3"
 hiltVersion = "2.55"
 hiltNavigationComposeVersion = "1.2.0"
 kspVersion = "2.1.10-1.0.29"
 retrofitVersion = "2.11.0"
 okHttpVersion = "4.12.0"
-dataStoreVersion = "1.1.5"
+dataStoreVersion = "1.1.6"
 biometricVersion = "1.1.0"
 googleServicesVersion = "4.4.2"
 firebaseBomVersion = "33.13.0"
@@ -26,7 +26,7 @@ mockKVersion = "1.13.16"
 kotestVersion = "6.0.0.M3"
 coroutineTestVersion = "1.10.2"
 androidxRunnerVersion = "1.6.2"
-composeTestVersion = "1.8.0"
+composeTestVersion = "1.8.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,11 +46,11 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitVersion" }
-okHttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttpVersion" }
-okHttpLogs = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttpVersion" }
+ok-http = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttpVersion" }
+ok-http-logs = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttpVersion" }
 datastore = { group = "androidx.datastore", name = "datastore", version.ref = "dataStoreVersion" }
 biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometricVersion" }
-firebaseBom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBomVersion" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBomVersion" }
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
@@ -75,7 +75,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlinAndroidKsp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
-hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion" }
 google-jupiter-plugin = { id = "de.mannodermaus.android-junit5", version.ref = "jupiterPluginVersion" }

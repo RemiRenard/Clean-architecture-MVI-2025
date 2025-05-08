@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlinAndroidKsp)
-    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.google.jupiter.plugin)
@@ -40,7 +40,7 @@ android {
         debug {
             isMinifyEnabled = false
             isDebuggable = true
-            buildConfigField("String", "API_URL", "\"http://192.168.1.60:8080/api/\"")
+            buildConfigField("String", "API_URL", "\"http://192.168.1.100:8080/api/\"")
         }
         release {
             isMinifyEnabled = false
@@ -80,19 +80,18 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit)
     implementation(libs.gson)
-    implementation(libs.okHttp)
-    implementation(libs.okHttpLogs)
+    implementation(libs.ok.http)
+    implementation(libs.ok.http.logs)
     implementation(libs.datastore)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.biometric)
-    implementation(platform(libs.firebaseBom))
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
 
-    // The first time you build this project you should use implementation instead of ksp,
-    // then rebuild with ksp
+    // Sometimes you need to rebuild with ksp
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)
 
